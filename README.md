@@ -12,12 +12,12 @@ Replace `github.com/shehinfn/dynamo-go-migration` with the actual path to the Gi
 
 ## Usage
 
+# Usage
+
 To use the `migration` package, first import it in your Go project:
 
+```go
 import "github.com/shehinfn/dynamo-go-migration"
-
-Then, define your DynamoDB schema using Go structs and `dynamo` tags:
-
 type Lead struct {
 	ID        string `dynamo:"S,dynamo_hash" json:"ID,omitempty"`
 	FirstName string `dynamo:"S" json:"first_name"`
@@ -25,22 +25,22 @@ type Lead struct {
 	Email     string `dynamo:"S" json:"email"`
 	Phone     string `dynamo:"S" json:"phone"`
 }
-
-Finally, call the `Migrate` function to create the DynamoDB tables:
-
 func main() {
-	// Initialize the DynamoDB connection
-	database.InitDynnamoDB()
+    // Initialize the DynamoDB connection
+    database.InitDynnamoDB()
 
-	// Run migrations
-	runMigrations()
+    // Run migrations
+    runMigrations()
 
-	// ... rest of your main function
+    // ... rest of your main function
 }
 
 func runMigrations() {
-	migration.Migrate(db *dynamodb.DynamoDB, migration.ModelInfo{Model: Lead{}, TableName: "leads"})
+    db := database.GetDynamoDB()
+    migration.Migrate(db, migration.ModelInfo{Model: Lead{}, TableName: "leads"})
 }
+```
+
 
 ## Contributing
 
