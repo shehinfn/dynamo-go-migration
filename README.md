@@ -5,11 +5,11 @@ The `migration` package is a Go library that provides an easy way to create and 
 ## Installation
 
 To install the `migration` package, run the following command:
-
+```
 go get github.com/shehinfn/dynamo-go-migration
 
 Replace `github.com/shehinfn/dynamo-go-migration` with the actual path to the GitHub repository you created earlier.
-
+```
 ## Usage
 
 # Usage
