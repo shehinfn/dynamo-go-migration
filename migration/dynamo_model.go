@@ -1,7 +1,6 @@
 package migration
 
 import (
-	"astragpt/http_server/database"
 	"log"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -14,25 +13,25 @@ type ModelInfo struct {
 	TableName string
 }
 
-func Migrate(modelsInfo ...ModelInfo) {
+func Migrate(db *dynamodb.DynamoDB, modelsInfo ...ModelInfo) {
 	for _, modelInfo := range modelsInfo {
-		err := createTable(modelInfo.Model, modelInfo.TableName)
+		err := createTable(db, modelInfo.Model, modelInfo.TableName)
 		if err != nil {
 			log.Fatalf("Failed to create table %s: %v", modelInfo.TableName, err)
 		}
 	}
 }
 
-func createTable(model interface{}, tableName string) error {
+func createTable(db *dynamodb.DynamoDB, model interface{}, tableName string) error {
 	// Check if the table exists
-	_, err := database.DB.DescribeTable(&dynamodb.DescribeTableInput{
+	_, err := db.DescribeTable(&dynamodb.DescribeTableInput{
 		TableName: aws.String(tableName),
 	})
 
 	// If the table doesn't exist, create it
 	if err != nil {
 		if aerr, ok := err.(awserr.Error); ok && aerr.Code() == dynamodb.ErrCodeResourceNotFoundException {
-			_, err := database.DB.CreateTable(createTableInput(model, tableName))
+			_, err := db.CreateTable(createTableInput(model, tableName))
 			if err != nil {
 				return err
 			}
