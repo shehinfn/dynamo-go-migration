@@ -6,15 +6,15 @@ The `migration` package is a Go library that provides an easy way to create and 
 
 To install the `migration` package, run the following command:
 
-go get https://github.com/shehinfn/dynamo-go-migration
+go get github.com/shehinfn/dynamo-go-migration
 
-Replace `https://github.com/shehinfn/dynamo-go-migration` with the actual path to the GitHub repository you created earlier.
+Replace `github.com/shehinfn/dynamo-go-migration` with the actual path to the GitHub repository you created earlier.
 
 ## Usage
 
 To use the `migration` package, first import it in your Go project:
 
-import "https://github.com/shehinfn/dynamo-go-migration"
+import "github.com/shehinfn/dynamo-go-migration"
 
 Then, define your DynamoDB schema using Go structs and `dynamo` tags:
 
@@ -39,9 +39,7 @@ func main() {
 }
 
 func runMigrations() {
-	migration.Migrate(
-		migration.ModelInfo{Model: Lead{}, TableName: "leads"},
-	)
+	migration.Migrate(db *dynamodb.DynamoDB, migration.ModelInfo{Model: Lead{}, TableName: "leads"})
 }
 
 ## Contributing
